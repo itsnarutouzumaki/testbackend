@@ -1,0 +1,71 @@
+{
+  "info": {
+    "name": "Guardian School Backend",
+    "description": "Local development collection. Login tokens are saved to collection variables. Demo accounts are development-only.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:4000/api/v1" },
+    { "key": "guardianToken", "value": "" },
+    { "key": "adminToken", "value": "" },
+    { "key": "teacherToken", "value": "" },
+    { "key": "fileKey", "value": "" },
+    { "key": "notificationId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [{ "name": "Health check", "request": { "method": "GET", "url": "http://localhost:4000/health" } }]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Guardian login",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["if (pm.response.code === 200) pm.collectionVariables.set('guardianToken', pm.response.json().accessToken);"] } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"identifier\": \"priya.sharma@example.com\",\n  \"password\": \"Demo@123\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/auth/login" }
+        },
+        {
+          "name": "Teacher login",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["if (pm.response.code === 200) pm.collectionVariables.set('teacherToken', pm.response.json().accessToken);"] } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"identifier\": \"priya.sharma@greenwood-demo.edu\",\n  \"password\": \"DemoTeacher@123\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/auth/login" }
+        },
+        {
+          "name": "Admin login",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["if (pm.response.code === 200) pm.collectionVariables.set('adminToken', pm.response.json().accessToken);"] } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"identifier\": \"admin@greenwood-demo.edu\",\n  \"password\": \"DemoAdmin@123\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/auth/login" }
+        },
+        {
+          "name": "Guardian signup (edit email/mobile before use)",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"fullName\": \"New Guardian\",\n  \"email\": \"new.guardian@example.com\",\n  \"mobileNumber\": \"+919876543210\",\n  \"password\": \"A-strong-password-123\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/auth/signup" }
+        },
+        {
+          "name": "Change password",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{guardianToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"currentPassword\": \"Demo@123\",\n  \"newPassword\": \"A-new-strong-password-123\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/auth/change-password" }
+        }
+      ]
+    },
+    {
+      "name": "Guardian data and actions",
+      "item": [
+        { "name": "Get full app snapshot", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{guardianToken}}" }], "url": "{{baseUrl}}/app-data" } },
+        { "name": "Submit complaint", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{guardianToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"childId\": \"aarav\",\n  \"category\": \"transport\",\n  \"subject\": \"Bus timing issue\",\n  \"message\": \"The bus arrived late today.\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/complaints" } },
+        { "name": "Submit leave request (correct demo password)", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{guardianToken}}" }, { "key": "Idempotency-Key", "value": "leave-test-001" }], "body": { "mode": "raw", "raw": "{\n  \"childId\": \"aarav\",\n  \"startDate\": \"2026-11-02\",\n  \"endDate\": \"2026-11-03\",\n  \"reason\": \"Medical appointment\",\n  \"password\": \"Demo@123\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/leave-requests" } },
+        { "name": "Update profile", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{guardianToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"fullName\": \"Priya Sharma\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/profile/update" } },
+        { "name": "Save language preference", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{guardianToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"language\": \"hi\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/profile/language" } },
+        { "name": "Mark one notification read", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{guardianToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"notificationId\": \"n-1\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/notifications/read" } },
+        { "name": "Mark all notifications read", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{guardianToken}}" }], "body": { "mode": "raw", "raw": "{}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/notifications/read-all" } },
+        { "name": "Register a device (replace token with a real Expo token)", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{guardianToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"expoPushToken\": \"ExpoPushToken[replace-with-real-token] \",\n  \"platform\": \"android\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/notifications/register-device" } },
+        { "name": "Download a file by key", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{guardianToken}}" }], "url": "{{baseUrl}}/files/download?key={{fileKey}}" } }
+      ]
+    },
+    {
+      "name": "Notification broadcast testing",
+      "item": [
+        { "name": "Send class/section announcement (admin or assigned teacher)", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"subject\": { \"en\": \"Class 5 announcement\", \"hi\": \"कक्षा 5 की सूचना\" },\n  \"content\": { \"en\": \"Please review tomorrow's schedule.\", \"hi\": \"कृपया कल का कार्यक्रम देखें।\" },\n  \"audience\": { \"type\": \"class\", \"className\": \"Class 5\", \"section\": \"A\" }\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/notifications/send" } },
+        { "name": "Send school-wide announcement (admin only)", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"subject\": { \"en\": \"School holiday\", \"hi\": \"विद्यालय में अवकाश\" },\n  \"content\": { \"en\": \"School is closed tomorrow.\", \"hi\": \"कल विद्यालय बंद रहेगा।\" },\n  \"audience\": { \"type\": \"school\" }\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/notifications/send" } },
+        { "name": "Send to all guardians (admin only)", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"subject\": \"Fee Reminder\",\n  \"content\": \"Please check the updated fee details.\",\n  \"audience\": { \"type\": \"all_guardians\" }\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/notifications/send" } }
+      ]
+    }
+  ]
+}

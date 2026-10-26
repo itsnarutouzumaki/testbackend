@@ -1,0 +1,29 @@
+{
+  "id": "greenwood-demo",
+  "name": "Greenwood International School",
+  "tagline": "Learn · Grow · Succeed",
+  "established": 2010,
+  "address": "RathYatra Road, Varanasi, Uttar Pradesh, India",
+  "shortLocation": "Varanasi, Uttar Pradesh",
+  "phone": "+91 542 400 2000",
+  "email": "hello@greenwood-demo.edu",
+  "website": "https://example.org/greenwood-demo",
+  "grades": "Nursery – Class 12",
+  "about": "Greenwood International School encourages curiosity, kindness and independent thinking. Our learning environment combines strong academic foundations with arts, sports, technology and a supportive school community.",
+  "mission": "To nurture confident, compassionate learners who are ready to contribute to their communities.",
+  "facilities": [
+    "Science and computer labs",
+    "Library and reading corner",
+    "Indoor and outdoor sports",
+    "Music and art studios",
+    "School transport",
+    "Counselling and student support"
+  ],
+  "defaultAcademicYear": "2026-27",
+  "availableAcademicYears": [
+    "2026-27",
+    "2025-26",
+    "2024-25",
+    "2023-24"
+  ]
+}

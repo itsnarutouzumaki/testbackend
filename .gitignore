@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+data/store.json
+data/store.json.*.tmp
+storage/files/private/
+coverage/
+*.log

@@ -1,0 +1,278 @@
+[
+  {
+    "id": "t-priya",
+    "name": "Priya Sharma",
+    "photoUrl": "https://i.pravatar.cc/240?img=47",
+    "designation": "Mathematics Teacher",
+    "subjects": [
+      "Mathematics"
+    ],
+    "highestDegree": "M.Sc. Mathematics",
+    "qualifications": [
+      {
+        "degree": "M.Sc. Mathematics",
+        "institution": "Banaras Hindu University",
+        "year": "2016"
+      },
+      {
+        "degree": "B.Ed.",
+        "institution": "University of Allahabad",
+        "year": "2018"
+      }
+    ],
+    "experienceYears": 9,
+    "specialization": "Middle-school mathematics and problem-solving",
+    "about": "I enjoy helping students build confidence with mathematical concepts through examples, practice and patient guidance.",
+    "email": "priya.sharma@greenwood-demo.edu",
+    "phone": "+91 98765 43210",
+    "classes": [
+      "Class 5",
+      "Class 6",
+      "Class 7"
+    ],
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "awards": [
+      "Innovative Teaching Practice Award · 2024"
+    ],
+    "officeHours": "Monday–Friday · 2:30–3:30 PM"
+  },
+  {
+    "id": "t-amit",
+    "name": "Amit Verma",
+    "photoUrl": "https://i.pravatar.cc/240?img=12",
+    "designation": "Physics Teacher",
+    "subjects": [
+      "Science",
+      "Physics"
+    ],
+    "highestDegree": "M.Sc. Physics",
+    "qualifications": [
+      {
+        "degree": "M.Sc. Physics",
+        "institution": "IIT (BHU) Varanasi",
+        "year": "2015"
+      },
+      {
+        "degree": "B.Ed.",
+        "institution": "Mahatma Gandhi Kashi Vidyapith",
+        "year": "2017"
+      }
+    ],
+    "experienceYears": 11,
+    "specialization": "Physics demonstrations and conceptual science",
+    "about": "My classes connect scientific ideas with everyday observations, experiments and curiosity-driven questions.",
+    "email": "amit.verma@greenwood-demo.edu",
+    "phone": "+91 98765 43211",
+    "classes": [
+      "Class 7",
+      "Class 8",
+      "Class 9"
+    ],
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "awards": [
+      "Science Lab Mentor · 2023"
+    ],
+    "officeHours": "Tuesday–Thursday · 1:45–2:30 PM"
+  },
+  {
+    "id": "t-neha",
+    "name": "Neha Gupta",
+    "photoUrl": "https://i.pravatar.cc/240?img=44",
+    "designation": "English Teacher",
+    "subjects": [
+      "English"
+    ],
+    "highestDegree": "M.A. English",
+    "qualifications": [
+      {
+        "degree": "M.A. English Literature",
+        "institution": "Banaras Hindu University",
+        "year": "2017"
+      },
+      {
+        "degree": "B.Ed.",
+        "institution": "University of Allahabad",
+        "year": "2019"
+      }
+    ],
+    "experienceYears": 7,
+    "specialization": "Reading comprehension, writing and communication",
+    "about": "I encourage students to read widely, express ideas clearly and develop confidence in written communication.",
+    "email": "neha.gupta@greenwood-demo.edu",
+    "phone": "+91 98765 43212",
+    "classes": [
+      "Class 5",
+      "Class 8"
+    ],
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "awards": [
+      "Reading Culture Champion · 2025"
+    ],
+    "officeHours": "Monday–Wednesday · 2:00–2:45 PM"
+  },
+  {
+    "id": "t-rohit",
+    "name": "Rohit Singh",
+    "photoUrl": "https://i.pravatar.cc/240?img=13",
+    "designation": "Computer Science Teacher",
+    "subjects": [
+      "Computer"
+    ],
+    "highestDegree": "M.Tech. Computer Science",
+    "qualifications": [
+      {
+        "degree": "M.Tech. Computer Science",
+        "institution": "NIT Jamshedpur",
+        "year": "2017"
+      },
+      {
+        "degree": "B.Ed.",
+        "institution": "IGNOU",
+        "year": "2020"
+      }
+    ],
+    "experienceYears": 8,
+    "specialization": "Digital literacy, computational thinking and coding",
+    "about": "I help students use technology thoughtfully while building logical thinking and practical digital skills.",
+    "email": "rohit.singh@greenwood-demo.edu",
+    "phone": "+91 98765 43213",
+    "classes": [
+      "Class 5",
+      "Class 8",
+      "Class 9"
+    ],
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "awards": [],
+    "officeHours": "Friday · 12:30–1:30 PM"
+  },
+  {
+    "id": "t-sunita",
+    "name": "Sunita Patel",
+    "photoUrl": "https://i.pravatar.cc/240?img=49",
+    "designation": "Social Science Teacher",
+    "subjects": [
+      "Social Science"
+    ],
+    "highestDegree": "M.A. History",
+    "qualifications": [
+      {
+        "degree": "M.A. History",
+        "institution": "Banaras Hindu University",
+        "year": "2014"
+      },
+      {
+        "degree": "B.Ed.",
+        "institution": "University of Allahabad",
+        "year": "2016"
+      }
+    ],
+    "experienceYears": 12,
+    "specialization": "History, civics and project-based learning",
+    "about": "I make history and civics relatable through timelines, maps, discussions and local examples.",
+    "email": "sunita.patel@greenwood-demo.edu",
+    "phone": "+91 98765 43214",
+    "classes": [
+      "Class 5",
+      "Class 8",
+      "Class 9"
+    ],
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "awards": [
+      "Outstanding Mentor · 2022"
+    ],
+    "officeHours": "Wednesday · 1:00–2:00 PM"
+  },
+  {
+    "id": "t-vikram",
+    "name": "Vikram Yadav",
+    "photoUrl": "https://i.pravatar.cc/240?img=15",
+    "designation": "Hindi Teacher",
+    "subjects": [
+      "Hindi"
+    ],
+    "highestDegree": "M.A. Hindi",
+    "qualifications": [
+      {
+        "degree": "M.A. Hindi",
+        "institution": "Mahatma Gandhi Kashi Vidyapith",
+        "year": "2016"
+      },
+      {
+        "degree": "B.Ed.",
+        "institution": "University of Allahabad",
+        "year": "2018"
+      }
+    ],
+    "experienceYears": 10,
+    "specialization": "Hindi literature, grammar and creative writing",
+    "about": "My goal is to help students appreciate language and communicate with clarity and imagination.",
+    "email": "vikram.yadav@greenwood-demo.edu",
+    "phone": "+91 98765 43215",
+    "classes": [
+      "Class 5",
+      "Class 8"
+    ],
+    "languages": [
+      "Hindi",
+      "English"
+    ],
+    "awards": [],
+    "officeHours": "Tuesday · 2:30–3:00 PM"
+  },
+  {
+    "id": "t-rakesh",
+    "name": "Rakesh Tiwari",
+    "photoUrl": "https://i.pravatar.cc/240?img=60",
+    "designation": "Former Mathematics Teacher",
+    "subjects": [
+      "Mathematics"
+    ],
+    "highestDegree": "M.Sc. Mathematics",
+    "qualifications": [
+      {
+        "degree": "M.Sc. Mathematics",
+        "institution": "Banaras Hindu University",
+        "year": "2009"
+      },
+      {
+        "degree": "B.Ed.",
+        "institution": "University of Allahabad",
+        "year": "2011"
+      }
+    ],
+    "experienceYears": 15,
+    "specialization": "Mathematics foundations and exam preparation",
+    "about": "Rakesh taught Mathematics at Greenwood in previous academic years, emphasizing clear methods and consistent practice.",
+    "email": "rakesh.tiwari@greenwood-demo.edu",
+    "phone": "+91 98765 43216",
+    "classes": [
+      "Class 4",
+      "Class 5",
+      "Class 6"
+    ],
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "awards": [
+      "Academic Mentor Recognition · 2020"
+    ],
+    "officeHours": "Historical faculty record",
+    "isActive": false
+  }
+]
