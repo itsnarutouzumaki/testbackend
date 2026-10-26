@@ -84,6 +84,9 @@ Authorization: Bearer <accessToken>
 | POST | `/api/v1/notifications/send` | Admin/teacher with audience restrictions | Create notification-history records and attempt Expo push delivery |
 | POST | `/api/v1/children/link-requests` | Guardian | Ask the school to link a child by student/admission ID |
 | POST | `/api/v1/children/link-requests/:requestId/decision` | Admin | Approve/reject a pending child link request |
+| GET | `/api/v1/admin/debug/store-snapshot` | Admin (temporarily enabled) | Export a bounded, credential-redacted JSON store snapshot |
+| GET | `/api/v1/debug/store-snapshot` | No (test only) | Browser snapshot, only when enabled outside production |
+| GET | `/api/v1/debug/send-test-notification?to=<guardianId>` | No (test only) | **Triggers a test push** to a registered demo guardian |
 
 ### 1. Login
 
@@ -236,6 +239,16 @@ Errors use `{ "success": false, "message": "...", "code": "..." }`. Write respon
 `JsonStoreRepository` serializes mutations in one Node process and uses a temporary file + atomic rename. Feature code does not directly edit `data/store.json`; it calls the repository. This keeps a future database replacement isolated to repository/service code.
 
 This does not provide multi-process locking, high availability, transactional guarantees across multiple servers, or database-level query performance. For production, migrate to a real database before scaling and keep file binaries in durable object storage or protected disk storage.
+
+## Temporary Render debugging
+
+Request logging is concise by default and includes a request ID, method, path, response status and duration. For a temporary debugging session, set `HTTP_DEBUG_LOGGING=true` in the Render service environment and redeploy/restart. Detailed logs include sanitized JSON query parameters and bodies; credentials and common guardian/student identifying fields are redacted. Binary/file responses are never logged, output is truncated, and store-snapshot response bodies are never written to logs.
+
+For this dummy-data test backend, the browser-friendly `GET /api/v1/debug/store-snapshot` endpoint is available only when `NODE_ENV` is not `production` and `DEBUG_STORE_EXPORT_ENABLED=true`. It returns a bounded JSON snapshot with credentials and file bytes excluded. The existing `/api/v1/admin/debug/store-snapshot` remains separate and still requires administrator authentication.
+
+The browser-only notification test endpoint has a side effect: opening `GET /api/v1/debug/send-test-notification?to=guardian-demo-001` sends one fixed test notification to that active demo guardian's registered Expo push token. It is available only when `NODE_ENV` is not `production` and `DEBUG_PUSH_TEST_ENABLED=true`, accepts only a demo guardian ID, and is rate-limited. Do not open or refresh this URL unless you intend to trigger a push. It does not accept a message, token or push credential from the query string.
+
+The push response reports the Expo HTTP status, whether a push ticket was accepted, and any Expo ticket IDs. Acceptance is not delivery confirmation. To check delivery, wait about 15 minutes, then submit the returned ticket ID(s) to Expo's receipt endpoint `https://exp.host/--/api/v2/push/getReceipts` (POST JSON `{ "ids": ["<ticket-id>"] }` with the same Expo authorization if your project requires it); inspect each receipt's `status` and `details.error`. Keep both debug flags disabled by default and turn them off immediately after testing. These testing endpoints are disabled in production and are not production data-export or notification interfaces.
 
 ## Push notifications requirements
 

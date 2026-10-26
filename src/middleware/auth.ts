@@ -5,6 +5,7 @@ import type { AppConfig } from "../config";
 import type { JsonStoreRepository } from "../repositories/json-store";
 import type { UserRole } from "../types";
 import { failure } from "../utils/responses";
+import { logRequestError } from "./http-logging";
 
 export interface AuthDeps {
   config: AppConfig;
@@ -41,7 +42,10 @@ export function requireAuth(deps: AuthDeps) {
       req.authUser = { id: user.id, role: user.role, tokenVersion: user.tokenVersion };
       next();
     } catch (error) {
-      if (error instanceof AppError) return failure(res, error.status, error.message, error.code);
+      if (error instanceof AppError) {
+        logRequestError(req, error);
+        return failure(res, error.status, error.message, error.code);
+      }
       next(error);
     }
   };

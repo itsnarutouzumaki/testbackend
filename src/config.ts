@@ -13,6 +13,10 @@ export interface AppConfig {
   demoTeacherPassword: string;
   demoAdminPassword: string;
   expoPushAccessToken?: string;
+  httpDebugLogging: boolean;
+  debugStoreExportEnabled: boolean;
+  debugPushTestEnabled: boolean;
+  debugStoreMaxBytes: number;
 }
 
 function bool(value: string | undefined, fallback: boolean): boolean {
@@ -30,6 +34,10 @@ export function loadConfig(): AppConfig {
   if (nodeEnv !== "production" && jwtSecret.length < 32) {
     throw new Error("JWT_SECRET must contain at least 32 characters.");
   }
+  const debugStoreMaxBytes = Number(process.env.DEBUG_STORE_EXPORT_MAX_BYTES ?? 2 * 1024 * 1024);
+  if (!Number.isSafeInteger(debugStoreMaxBytes) || debugStoreMaxBytes < 1) {
+    throw new Error("DEBUG_STORE_EXPORT_MAX_BYTES must be a positive integer.");
+  }
   const root = process.cwd();
   return {
     nodeEnv,
@@ -43,6 +51,10 @@ export function loadConfig(): AppConfig {
     demoGuardianPassword: process.env.DEMO_GUARDIAN_PASSWORD ?? "Demo@123",
     demoTeacherPassword: process.env.DEMO_TEACHER_PASSWORD ?? "DemoTeacher@123",
     demoAdminPassword: process.env.DEMO_ADMIN_PASSWORD ?? "DemoAdmin@123",
-    expoPushAccessToken: process.env.EXPO_PUSH_ACCESS_TOKEN || undefined
+    expoPushAccessToken: process.env.EXPO_PUSH_ACCESS_TOKEN || undefined,
+    httpDebugLogging: bool(process.env.HTTP_DEBUG_LOGGING, false),
+    debugStoreExportEnabled: bool(process.env.DEBUG_STORE_EXPORT_ENABLED, false),
+    debugPushTestEnabled: bool(process.env.DEBUG_PUSH_TEST_ENABLED, false),
+    debugStoreMaxBytes
   };
 }

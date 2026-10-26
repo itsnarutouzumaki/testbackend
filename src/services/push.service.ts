@@ -14,10 +14,12 @@ export interface PushOutcome {
   acceptedTokens: string[];
   failedTokens: string[];
   unregisteredTokens: string[];
+  httpStatuses?: number[];
+  ticketIds?: string[];
 }
 
 export async function sendExpoPush(messages: PushMessage[], config: AppConfig): Promise<PushOutcome> {
-  const outcome: PushOutcome = { acceptedTokens: [], failedTokens: [], unregisteredTokens: [] };
+  const outcome: PushOutcome = { acceptedTokens: [], failedTokens: [], unregisteredTokens: [], httpStatuses: [], ticketIds: [] };
   if (messages.length === 0) return outcome;
 
   for (let start = 0; start < messages.length; start += 100) {
@@ -33,20 +35,22 @@ export async function sendExpoPush(messages: PushMessage[], config: AppConfig): 
         },
         body: JSON.stringify(chunk)
       });
+      outcome.httpStatuses!.push(response.status);
       if (!response.ok) {
         outcome.failedTokens.push(...chunk.map((message) => message.to));
         console.error(`Expo push request failed with HTTP ${response.status}.`);
         continue;
       }
-      const payload = await response.json() as { data?: Array<{ status?: string; details?: { error?: string }; message?: string }> | { status?: string; details?: { error?: string }; message?: string } };
+      const payload = await response.json() as { data?: Array<{ id?: string; status?: string; details?: { error?: string }; message?: string }> | { id?: string; status?: string; details?: { error?: string }; message?: string } };
       const tickets = Array.isArray(payload.data) ? payload.data : payload.data ? [payload.data] : [];
       chunk.forEach((message, index) => {
         const ticket = tickets[index];
+        if (ticket?.id) outcome.ticketIds!.push(ticket.id);
         if (ticket?.status === "ok") outcome.acceptedTokens.push(message.to);
         else {
           outcome.failedTokens.push(message.to);
           if (ticket?.details?.error === "DeviceNotRegistered") outcome.unregisteredTokens.push(message.to);
-          if (ticket?.message) console.error(`Expo push ticket rejected: ${ticket.message}`);
+          if (ticket?.message) console.error("Expo push ticket was rejected.");
         }
       });
       if (tickets.length !== chunk.length) {
@@ -54,7 +58,7 @@ export async function sendExpoPush(messages: PushMessage[], config: AppConfig): 
       }
     } catch (error) {
       outcome.failedTokens.push(...chunk.map((message) => message.to));
-      console.error("Could not reach Expo Push Service:", error instanceof Error ? error.message : "Unknown error");
+      console.error("Could not reach Expo Push Service.");
     }
   }
   return outcome;

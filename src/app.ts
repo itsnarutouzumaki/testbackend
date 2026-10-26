@@ -12,7 +12,10 @@ import { profileRoutes } from "./routes/profile.routes";
 import { filesRoutes } from "./routes/files.routes";
 import { notificationRoutes, type PushSender } from "./routes/notifications.routes";
 import { childrenRoutes } from "./routes/children.routes";
+import { adminRoutes } from "./routes/admin.routes";
+import { debugRoutes } from "./routes/debug.routes";
 import { errorHandler, notFoundHandler } from "./middleware/error-handler";
+import { httpLoggingMiddleware } from "./middleware/http-logging";
 
 export interface CreateAppOptions {
   config: AppConfig;
@@ -31,9 +34,11 @@ export function createApp(options: CreateAppOptions): Express {
     },
     credentials: false,
     methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "Idempotency-Key"]
+    allowedHeaders: ["Content-Type", "Authorization", "Idempotency-Key", "X-Request-Id"],
+    exposedHeaders: ["X-Request-Id"]
   }));
   app.use(express.json({ limit: "2mb", strict: true }));
+  app.use(httpLoggingMiddleware(options.config.httpDebugLogging));
   app.use(rateLimit({ windowMs: 15 * 60 * 1000, limit: 300, standardHeaders: "draft-8", legacyHeaders: false }));
 
   app.get("/health", (_req, res) => res.status(200).json({ success: true, message: "Guardian School API is healthy." }));
@@ -45,6 +50,8 @@ export function createApp(options: CreateAppOptions): Express {
   app.use("/api/v1/files", filesRoutes(options));
   app.use("/api/v1/notifications", notificationRoutes(options));
   app.use("/api/v1/children", childrenRoutes(options));
+  app.use("/api/v1/admin", adminRoutes(options));
+  app.use("/api/v1/debug", debugRoutes({ ...options, ...(options.pushSender ? { pushSender: options.pushSender } : {}) }));
 
   app.use(notFoundHandler);
   app.use(errorHandler);
